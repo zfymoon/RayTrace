@@ -9,6 +9,8 @@ public class SurfaceInfo : MonoBehaviour
     public Vector3 emission;
     public float alpha;
 
+    public Vector3 normal;
+
     public void Awake()
     {
 

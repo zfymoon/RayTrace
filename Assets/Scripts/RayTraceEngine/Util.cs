@@ -44,4 +44,17 @@ public class Util : MonoBehaviour
     {
         return new Vector3(first.x*second.x,first.y*second.y,first.z*second.z);
     }
+
+    /*
+     * 求三角形面积
+     * 
+     */
+    public static float ComputeTriangleSpace(Vector3 a,Vector3 b,Vector3 c)
+    {
+
+        return Vector3.Dot(a, b) / 2.0f;
+
+    }
+
+   
 }

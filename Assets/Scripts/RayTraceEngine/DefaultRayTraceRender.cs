@@ -36,6 +36,7 @@ public class DefaultRayTraceRender : RayTraceRender
 
                     surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
                     surfaceInfo.albedo = material.GetFloat("_Metallic");
+                    surfaceInfo.normal = hit.normal;
                   
 
                 }
@@ -48,7 +49,31 @@ public class DefaultRayTraceRender : RayTraceRender
                         Texture2D texture = material.mainTexture as Texture2D;
                         surfaceInfo.emission = Util.ColorToVector3(texture.GetPixelBilinear(hit.textureCoord.x, hit.textureCoord.y));
                     }
-                   
+                    surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
+                    surfaceInfo.albedo = material.GetFloat("_Metallic");
+                    Mesh mesh = gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh;
+                    Vector3[] normals = mesh.normals;
+                    int[] triangles = mesh.triangles;
+
+                    // Extract local space normals of the triangle we hit
+                    Vector3 n0 = normals[triangles[hit.triangleIndex * 3 + 0]];
+                    Vector3 n1 = normals[triangles[hit.triangleIndex * 3 + 1]];
+                    Vector3 n2 = normals[triangles[hit.triangleIndex * 3 + 2]];
+
+                    // interpolate using the barycentric coordinate of the hitpoint
+                    Vector3 baryCenter = hit.barycentricCoordinate;
+
+                    // Use barycentric coordinate to interpolate normal
+                    Vector3 interpolatedNormal = n0 * baryCenter.x + n1 * baryCenter.y + n2 * baryCenter.z;
+                    // normalize the interpolated normal
+                    interpolatedNormal = interpolatedNormal.normalized;
+
+                    // Transform local space normals to world space
+                    Transform hitTransform = hit.collider.transform;
+                    interpolatedNormal = hitTransform.TransformDirection(interpolatedNormal);
+
+                    surfaceInfo.normal = interpolatedNormal;
+
                 }
 
 

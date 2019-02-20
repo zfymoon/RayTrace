@@ -90,6 +90,7 @@ abstract public class RayTraceRender
         Vector3 result = new Vector3(0.0f, 0.0f, 0.0f);
         List<Light> lightList = new List<Light>(mLightList);
         SurfaceInfo surfaceInfo = GetSurfaceInfo(screenPosition, hit);
+        hit.normal = surfaceInfo.normal;
 
         if (!TerminalTrace(screenPosition,hit,ray))
         {
