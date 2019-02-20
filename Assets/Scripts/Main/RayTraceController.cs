@@ -77,12 +77,14 @@ public class RayTraceController : MonoBehaviour
             mPostMaterial = new Material(Shader.Find("Custom/PostHandle"));
 
         }
-        mPostMaterial.SetFloat("_Sample", mCurrentSample);
+       
 
-        mScreenTexture = Util.RenderTextureToTexture2D(source, mScreenWidth, mScreenHeight);
+        
 
         if (!mIsRendered)
         {
+            mPostMaterial.SetFloat("_Sample", mCurrentSample);
+            mScreenTexture = Util.RenderTextureToTexture2D(source, mScreenWidth, mScreenHeight);
             mRayTraceRender.Init(ref mTexture, mScreenWidth, mScreenHeight, ref mLightList,mScreenTexture);
             mRayTraceRender.Render();
             mTexture.Apply();
