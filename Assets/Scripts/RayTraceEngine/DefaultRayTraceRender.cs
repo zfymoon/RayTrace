@@ -33,12 +33,9 @@ public class DefaultRayTraceRender : RayTraceRender
                     {
                         surfaceInfo.emission = Util.ColorToVector3(material.color);
                     }
-
                     surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
                     surfaceInfo.albedo = material.GetFloat("_Metallic");
                     surfaceInfo.normal = hit.normal;
-                  
-
                 }
                 else
                 {
