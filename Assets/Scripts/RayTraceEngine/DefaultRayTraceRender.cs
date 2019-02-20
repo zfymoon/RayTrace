@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DefaultRayTraceRender : RayTraceRender
 {
 
-    private static int MAX_PATH_LENGTH = 10;
+    private static int MAX_PATH_LENGTH = 5;
 
     private int mCurrentPathCount;
 
