@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SurfaceInfo : MonoBehaviour
+public class SurfaceInfo
 {
     public float albedo;
     public float specular;
@@ -11,27 +11,15 @@ public class SurfaceInfo : MonoBehaviour
 
     public Vector3 normal;
 
-    public void Awake()
+    public void Init()
     {
-
-        //获取材质的颜色
-        if (this.gameObject.name == "Plane")
-        {
-            this.albedo = 0.1f;
-            this.specular = 0.7f;
-            this.alpha = 8.0f;
-
-            this.emission = new Vector3(1.0f, 0.8f, 0.2f);
-        }
-        else
-        {
-            Color color = Random.ColorHSV();
+        Color color = Random.ColorHSV();
             float chance = Random.value;
-            if (chance < 0.8f)
+            if (chance< 0.8f)
             {
                 bool metal = chance < 0.4f;
-                this.albedo = metal ? 0.0f : color.r;
-                this.specular = metal ? 0.0f : 0.04f;
+                this.albedo = metal? 0.0f : color.r;
+                this.specular = metal? 0.0f : 0.04f;
                
             
             }
@@ -42,10 +30,14 @@ public class SurfaceInfo : MonoBehaviour
             }
             this.albedo = 0.1f;
             this.specular = 0.7f;
-          
+
+
             this.alpha = 8.0f;
 
             this.emission = new Vector3(1.0f, 0.8f, 0.8f);
-        }
+
+
     }
+
+
 }

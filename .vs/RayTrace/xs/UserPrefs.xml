@@ -1,17 +1,18 @@
 ﻿<Properties StartupConfiguration="{77517ECE-7837-1870-5D6F-A62005446CB6}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Shaders/PostHandle.shader">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RayTraceEngine/Core/Compute/RayCast.compute">
     <Files>
-      <File FileName="Assets/Scripts/RayTraceEngine/DefaultLightHandler.cs" Line="38" Column="28" />
-      <File FileName="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="28" Column="22" />
+      <File FileName="Assets/Scripts/RayTraceEngine/DefaultLightHandler.cs" Line="43" Column="34" />
+      <File FileName="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="105" Column="1" />
       <File FileName="Assets/Scripts/RayTraceEngine/RayTest.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayUtil.cs" Line="49" Column="5" />
-      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" Line="111" Column="14" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayUtil.cs" Line="49" Column="1" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" Line="30" Column="5" />
       <File FileName="Assets/Scripts/Main/RayTraceController.cs" Line="245" Column="6" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/LightHandler.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/SurfaceInfo.cs" Line="7" Column="27" />
       <File FileName="../Downloads/CmRayTracePh (2)/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="51" Column="20" />
       <File FileName="Assets/Scripts/RayTraceEngine/Util.cs" Line="59" Column="4" />
-      <File FileName="Assets/Shaders/PostHandle.shader" Line="1" Column="1" />
+      <File FileName="Assets/Shaders/PostHandle.shader" Line="30" Column="45" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/Compute/RayCast.compute" Line="15" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -20,7 +21,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/curiezhu/Downloads/CmRayTracePh (2)/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" line="46" column="1" />
-      <Breakpoint file="/Users/curiezhu/RayTrace/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" relfile="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" line="72" column="1" />
+      <Breakpoint file="/Users/curiezhu/RayTrace/Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" relfile="Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" line="122" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

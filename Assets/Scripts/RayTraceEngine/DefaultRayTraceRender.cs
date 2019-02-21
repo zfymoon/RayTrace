@@ -19,7 +19,8 @@ public class DefaultRayTraceRender : RayTraceRender
             GameObject gameObject = hit.collider.gameObject;
             if(gameObject != null)
             {
-                surfaceInfo = gameObject.GetComponent<SurfaceInfo>();
+                surfaceInfo = new SurfaceInfo();
+                surfaceInfo.Init();
                 Renderer renderer = gameObject.GetComponent<Renderer>();
                 if (renderer)
                 {
@@ -44,6 +45,8 @@ public class DefaultRayTraceRender : RayTraceRender
                     Material material = null;
                     SkinnedMeshRenderer skinnedMeshRenderer = null;
                     SearchTexture(gameObject.transform, ref texture,ref material,ref skinnedMeshRenderer);
+                    surfaceInfo.alpha = 0.0f;
+                    surfaceInfo.albedo = 0.0f;
                     if (texture && material)
                     {
                         surfaceInfo.emission = Util.ColorToVector3(texture.GetPixelBilinear(hit.textureCoord.x, hit.textureCoord.y));
@@ -57,25 +60,60 @@ public class DefaultRayTraceRender : RayTraceRender
                         Vector3[] normals = mesh.normals;
                         int[] triangles = mesh.triangles;
 
-                        // Extract local space normals of the triangle we hit
-                        Vector3 n0 = normals[triangles[hit.triangleIndex * 3 + 0]];
-                        Vector3 n1 = normals[triangles[hit.triangleIndex * 3 + 1]];
-                        Vector3 n2 = normals[triangles[hit.triangleIndex * 3 + 2]];
+                        int trianglesLength = triangles.Length;
+                        int normalLength = normals.Length;
 
-                        // interpolate using the barycentric coordinate of the hitpoint
-                        Vector3 baryCenter = hit.barycentricCoordinate;
+                        int tIndex0 = hit.triangleIndex * 3 + 0;
+                        int tIndex1 = hit.triangleIndex * 3 + 1;
+                        int tIndex2 = hit.triangleIndex * 3 + 2;
 
-                        // Use barycentric coordinate to interpolate normal
-                        Vector3 interpolatedNormal = n0 * baryCenter.x + n1 * baryCenter.y + n2 * baryCenter.z;
-                        // normalize the interpolated normal
-                        interpolatedNormal = interpolatedNormal.normalized;
 
-                        // Transform local space normals to world space
-                        Transform hitTransform = hit.collider.transform;
-                        interpolatedNormal = hitTransform.TransformDirection(interpolatedNormal);
+                        if (tIndex0 < trianglesLength && tIndex1 < trianglesLength && tIndex2 < trianglesLength)
+                        {
+                            int vIndex0 = triangles[tIndex0];
+                            int vIndex1 = triangles[tIndex1];
+                            int vIndex2 = triangles[tIndex2];
+                            // Extract local space normals of the triangle we hit
 
-                        surfaceInfo.normal = interpolatedNormal;
+                            if (vIndex0 < normalLength && vIndex1 < normalLength && vIndex2 < normalLength)
+                            {
+                                Vector3 n0 = normals[vIndex0];
+                                Vector3 n1 = normals[vIndex1];
+                                Vector3 n2 = normals[vIndex2];
+
+                                // interpolate using the barycentric coordinate of the hitpoint
+                                Vector3 baryCenter = hit.barycentricCoordinate;
+
+                                // Use barycentric coordinate to interpolate normal
+                                Vector3 interpolatedNormal = n0 * baryCenter.x + n1 * baryCenter.y + n2 * baryCenter.z;
+                                // normalize the interpolated normal
+                                interpolatedNormal = interpolatedNormal.normalized;
+
+                                // Transform local space normals to world space
+                                Transform hitTransform = hit.collider.transform;
+                                interpolatedNormal = hitTransform.TransformDirection(interpolatedNormal);
+
+                                surfaceInfo.normal = interpolatedNormal;
+                            }
+                            else
+                            {
+                                surfaceInfo.normal = hit.normal;
+                            }
+                        }
+                        else
+                        {
+                            surfaceInfo.normal = hit.normal;
+                        }
+
+
+
                     }
+                    else
+                    {
+                        surfaceInfo.normal = hit.normal;
+                    }
+
+
 
                 }
 

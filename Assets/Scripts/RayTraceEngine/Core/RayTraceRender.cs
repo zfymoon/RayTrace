@@ -11,7 +11,7 @@ abstract public class RayTraceRender
     private int MAX_CAST_DISTANCE = 100;
     private Light[] mLightList;
     private List<LightHandler> mLightHandlerList;
-    public static int SAMPLE_COUNT = 4;
+    public static int SAMPLE_COUNT = 10;
     private Texture2D mMainTexture;
 
     public Color getColorFromScreen(Vector2 position)
@@ -102,7 +102,7 @@ abstract public class RayTraceRender
             //reflectRay.direction += Random.onUnitSphere;
 
 
-            result += (Trace(reflectRay,screenPosition)*0.5f);
+            result += (Trace(reflectRay,screenPosition)*surfaceInfo.albedo);
 
         }
         foreach (Light light in lightList)
@@ -117,9 +117,11 @@ abstract public class RayTraceRender
 
         }
 
-        result += new Vector3(0.1f, 0.1f, 0.1f);
 
-        if (surfaceInfo)
+        
+        result += new Vector3(0.38f, 0.38f, 0.38f);
+
+        if (surfaceInfo != null)
         {
             result = Util.Vector3MulVector3(result, surfaceInfo.emission);
         }

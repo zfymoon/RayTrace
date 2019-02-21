@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\RayTraceEngine\DefaultRayTraceRender.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\RayTest.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Util.cs" />
+    <None Include="Assets\Scripts\RayTraceEngine\Core\Compute\RayCast.compute" />
     <None Include="Assets\Shaders\PostHandle.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/curiezhu/RayTrace/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
