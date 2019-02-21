@@ -40,36 +40,42 @@ public class DefaultRayTraceRender : RayTraceRender
                 else
                 {
 
-                    Material material = gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<Renderer>().materials[1];
-                    if (material.mainTexture)
+                    Texture2D texture = null;
+                    Material material = null;
+                    SkinnedMeshRenderer skinnedMeshRenderer = null;
+                    SearchTexture(gameObject.transform, ref texture,ref material,ref skinnedMeshRenderer);
+                    if (texture && material)
                     {
-                        Texture2D texture = material.mainTexture as Texture2D;
                         surfaceInfo.emission = Util.ColorToVector3(texture.GetPixelBilinear(hit.textureCoord.x, hit.textureCoord.y));
+                        surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
+                        surfaceInfo.albedo = material.GetFloat("_Metallic");
+
                     }
-                    surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
-                    surfaceInfo.albedo = material.GetFloat("_Metallic");
-                    Mesh mesh = gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh;
-                    Vector3[] normals = mesh.normals;
-                    int[] triangles = mesh.triangles;
+                    if (skinnedMeshRenderer)
+                    {
+                        Mesh mesh = skinnedMeshRenderer.sharedMesh;
+                        Vector3[] normals = mesh.normals;
+                        int[] triangles = mesh.triangles;
 
-                    // Extract local space normals of the triangle we hit
-                    Vector3 n0 = normals[triangles[hit.triangleIndex * 3 + 0]];
-                    Vector3 n1 = normals[triangles[hit.triangleIndex * 3 + 1]];
-                    Vector3 n2 = normals[triangles[hit.triangleIndex * 3 + 2]];
+                        // Extract local space normals of the triangle we hit
+                        Vector3 n0 = normals[triangles[hit.triangleIndex * 3 + 0]];
+                        Vector3 n1 = normals[triangles[hit.triangleIndex * 3 + 1]];
+                        Vector3 n2 = normals[triangles[hit.triangleIndex * 3 + 2]];
 
-                    // interpolate using the barycentric coordinate of the hitpoint
-                    Vector3 baryCenter = hit.barycentricCoordinate;
+                        // interpolate using the barycentric coordinate of the hitpoint
+                        Vector3 baryCenter = hit.barycentricCoordinate;
 
-                    // Use barycentric coordinate to interpolate normal
-                    Vector3 interpolatedNormal = n0 * baryCenter.x + n1 * baryCenter.y + n2 * baryCenter.z;
-                    // normalize the interpolated normal
-                    interpolatedNormal = interpolatedNormal.normalized;
+                        // Use barycentric coordinate to interpolate normal
+                        Vector3 interpolatedNormal = n0 * baryCenter.x + n1 * baryCenter.y + n2 * baryCenter.z;
+                        // normalize the interpolated normal
+                        interpolatedNormal = interpolatedNormal.normalized;
 
-                    // Transform local space normals to world space
-                    Transform hitTransform = hit.collider.transform;
-                    interpolatedNormal = hitTransform.TransformDirection(interpolatedNormal);
+                        // Transform local space normals to world space
+                        Transform hitTransform = hit.collider.transform;
+                        interpolatedNormal = hitTransform.TransformDirection(interpolatedNormal);
 
-                    surfaceInfo.normal = interpolatedNormal;
+                        surfaceInfo.normal = interpolatedNormal;
+                    }
 
                 }
 
@@ -79,6 +85,44 @@ public class DefaultRayTraceRender : RayTraceRender
 
         return surfaceInfo;
 
+    }
+
+    public void SearchTexture(Transform transform,ref Texture2D textureResult,ref Material materialResult,ref SkinnedMeshRenderer skinnedMeshRenderer)
+    {
+        if (transform)
+        {
+            GameObject gameObject = transform.gameObject;
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            if (renderer)
+            {
+                Material[] materialList = renderer.materials;
+                foreach(Material material in materialList) {
+                    if (material)
+                    {
+                        Texture texture = material.mainTexture;
+                        if (texture)
+                        {
+
+                            textureResult = (Texture2D)texture;
+                            materialResult = material;
+                            skinnedMeshRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        int childCound = transform.childCount;
+        for(int i = 0; i < childCound; i++)
+        {
+            SearchTexture(transform.GetChild(i),ref textureResult,ref materialResult,ref skinnedMeshRenderer);
+            if (textureResult && materialResult)
+            {
+                return;
+            }
+        }
     }
 
     public override void PostTrace()
