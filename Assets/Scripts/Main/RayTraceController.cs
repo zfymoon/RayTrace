@@ -25,6 +25,8 @@ public class RayTraceController : MonoBehaviour
 
     private bool mIsRendered = false;
 
+    public ComputeShader shader;
+
 
 
     private int mScreenWidth;
@@ -60,6 +62,7 @@ public class RayTraceController : MonoBehaviour
 
         mRayTraceRender = new DefaultRayTraceRender();
 
+
     }
 
     public void Start()
@@ -83,6 +86,9 @@ public class RayTraceController : MonoBehaviour
 
         if (!mIsRendered)
         {
+            ComputeController computeController = new ComputeController(shader);
+            computeController.RunShader();
+
             mPostMaterial.SetFloat("_Sample", mCurrentSample);
             mScreenTexture = Util.RenderTextureToTexture2D(source, mScreenWidth, mScreenHeight);
             mRayTraceRender.Init(ref mTexture, mScreenWidth, mScreenHeight, ref mLightList,mScreenTexture);

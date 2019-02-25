@@ -130,3 +130,112 @@ Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
+Cmd: preprocessCompute
+  insize=936 outsize=935 ok=1
+Cmd: compileComputeKernel
+  error: 2 plat 14 at RayCast.compute(15): syntax error: unexpected token 'struct'
+  api=14 insize=935 outsize=0 ok=0
+Cmd: preprocessCompute
+  insize=1011 outsize=1010 ok=1
+Cmd: compileComputeKernel
+  api=14 insize=1010 outsize=753 ok=1
+Cmd: translateComputeKernel
+  api=14 insize=753 outsize=789 ok=1
+Cmd: preprocessCompute
+  insize=1133 outsize=1132 ok=1
+Cmd: initializeCompiler
+Cmd: preprocessCompute
+  insize=1270 outsize=1269 ok=1
+Cmd: preprocessCompute
+  insize=1272 outsize=1271 ok=1
+Cmd: initializeCompiler
+Cmd: preprocessCompute
+  insize=1307 outsize=1306 ok=1
+Cmd: preprocessCompute
+  insize=1317 outsize=1316 ok=1
+Cmd: compileComputeKernel
+  error: 2 plat 14 at RayCast.compute(15): syntax error: unexpected token 'RWStructuredBuffer'
+  api=14 insize=1316 outsize=0 ok=0
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: preprocessCompute
+  insize=1320 outsize=1319 ok=1
+Cmd: initializeCompiler
+Cmd: preprocessCompute
+  insize=1334 outsize=1333 ok=1
+Cmd: compileComputeKernel
+  api=14 insize=1333 outsize=753 ok=1
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler

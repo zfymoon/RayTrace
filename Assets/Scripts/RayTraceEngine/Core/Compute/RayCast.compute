@@ -4,30 +4,53 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float4> Result;
+
+
+//struct DebugInfo{
+//    float tag[100];
+//    float level[100];
+//    float info[100];
+//}
+//test hello world 104 101 108 108 111 32 119 111 114 108 100 
+//RWStructuredBuffer<DebugInfo> dataBuffer;
+float info[11] = {104 ,101 ,108, 108 ,111 ,32 ,119 ,111, 114 ,108, 100 };
 //采用世界坐标
 //光线
-struct  Ray{
-    float3  origin;
-    float3  direction;
-    float   t;
-}
+//struct  Ray{
+//    float3  origin;
+//    float3  direction;
+//    float   t;
+//}
 
-struct RayHit{
-    float3  position;//坐标
-    float   t;//和摄像机的距离
-    float3  tPosition0;//三角形坐标
-    float3  tPosition1;
-    float3  tPosition2;
-    float3  gravityPosition;//重心坐标
-    float3  tNormal0;
-    float3  tNormal1;
-    float3  tNormal2;
-    float3  normal;//法线
-}
+
+
+//struct RayHit{
+//    float3  position;//坐标
+//    float   t;//和摄像机的距离
+//    float3  tPosition0;//三角形坐标
+//    float3  tPosition1;
+//    float3  tPosition2;
+//    float3  gravityPosition;//重心坐标
+//    float3  tNormal0;
+//    float3  tNormal1;
+//    float3  tNormal2;
+//    float3  normal;//法线
+//}
+////包围球
+//struct BoundSphere{
+//    float3  position;
+//    float   r;
+
+//}
+
+//射线和圆求交点
+
+
 [numthreads(8,8,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     // TODO: insert actual code here!
 
     Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+    //dataBuffer[id.x].info = info;
 }

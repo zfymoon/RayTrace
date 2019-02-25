@@ -11,7 +11,7 @@ abstract public class RayTraceRender
     private int MAX_CAST_DISTANCE = 100;
     private Light[] mLightList;
     private List<LightHandler> mLightHandlerList;
-    public static int SAMPLE_COUNT = 10;
+    public static int SAMPLE_COUNT = 20;
     private Texture2D mMainTexture;
 
     public Color getColorFromScreen(Vector2 position)
@@ -49,8 +49,8 @@ abstract public class RayTraceRender
                 Vector3 color = new Vector3();
                 for (int i = 0; i < SAMPLE_COUNT; i++)
                 {
-                    float offsetX = 0.0f + Random.value*1.0f;
-                    float offsetY = 0.0f + Random.value*1.0f;
+                    float offsetX = 0.0f + Random.value*2.0f;
+                    float offsetY = 0.0f + Random.value*2.0f;
                     Vector2 position = new Vector2(x+offsetX, y+offsetY);
                
                     Ray ray = Camera.main.ScreenPointToRay(position);

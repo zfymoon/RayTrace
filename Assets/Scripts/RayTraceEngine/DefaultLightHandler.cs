@@ -27,7 +27,10 @@ public class DefaultLightHandler : LightHandler
                 ligthDirection = Vector3.Normalize(-light.transform.forward);
                 if (Vector3.Dot(ligthDirection, hit.normal) > 0)
                 {
-                    if (Physics.Raycast(hit.point, ligthDirection, 500))
+                    //在圆内随机采样
+                    
+                    Vector3 shadowRayDirection = ligthDirection + Random.onUnitSphere * 0.009f;
+                    if (Physics.Raycast(hit.point, shadowRayDirection, 500))
                     {
                         return new Vector3(0.0f, 0.0f, 0.0f);
                     }
@@ -42,6 +45,10 @@ public class DefaultLightHandler : LightHandler
                 break;
             case LightType.Point:
                 ligthDirection = Vector3.Normalize(hit.point - light.transform.position);
+                break;
+            case LightType.Spot:
+                //聚光灯
+
                 break;
         }
                 
