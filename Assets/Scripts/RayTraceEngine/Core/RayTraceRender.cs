@@ -11,8 +11,9 @@ abstract public class RayTraceRender
     private int MAX_CAST_DISTANCE = 100;
     private Light[] mLightList;
     private List<LightHandler> mLightHandlerList;
-    public static int SAMPLE_COUNT = 20;
+    public static int SAMPLE_COUNT = 50;
     private Texture2D mMainTexture;
+    public int mTraceCount = 0;
 
     public Color getColorFromScreen(Vector2 position)
     {
@@ -28,8 +29,6 @@ abstract public class RayTraceRender
 
     }
 
-
-
     public void Init(ref Texture2D screenTexture,int width,int height,ref Light[] lightList,Texture2D mainTexture)
     {
         mScreenTexture = screenTexture;
@@ -42,6 +41,7 @@ abstract public class RayTraceRender
 
     public void Render()
     {
+        OnStart();
         for(int y= mScreenHeight - 1; y >= 0; y--)
         {
             for(int x = 0; x < mScreenWidth; x++)
@@ -49,8 +49,8 @@ abstract public class RayTraceRender
                 Vector3 color = new Vector3();
                 for (int i = 0; i < SAMPLE_COUNT; i++)
                 {
-                    float offsetX = 0.0f + Random.value*2.0f;
-                    float offsetY = 0.0f + Random.value*2.0f;
+                    float offsetX = 0.0f + Random.value*1.0f;
+                    float offsetY = 0.0f + Random.value*1.0f;
                     Vector2 position = new Vector2(x+offsetX, y+offsetY);
                
                     Ray ray = Camera.main.ScreenPointToRay(position);
@@ -59,17 +59,21 @@ abstract public class RayTraceRender
                     PostTrace();
                 }
                 color /= (SAMPLE_COUNT + 0.0f);
+               
                 mScreenTexture.SetPixel(x, y, Util.Vector3ToColor(color));
             }
         }
+        OnFinish();
 
     }
     private Vector3 Trace(Ray ray, Vector2 screenPosition)
     {
         RaycastHit hit;
 
+        long startTime = Util.GetTimeStamp();
         if(Physics.Raycast(ray,out hit, MAX_CAST_DISTANCE))
         {
+          
             if (hit.distance > 0.0f)
             {
                 return Shade(hit, ray, screenPosition);
@@ -94,15 +98,20 @@ abstract public class RayTraceRender
 
         if (!TerminalTrace(screenPosition,hit,ray))
         {
-            //一定有反射，先不考虑折射
-            Ray reflectRay = new Ray();
-            reflectRay.origin = hit.point + hit.normal * 0.0001f;
-            reflectRay.direction = Vector3.Reflect(ray.direction, hit.normal);
-            //反射方向随机采样
-            //reflectRay.direction += Random.onUnitSphere;
+            //能反射的时候才反射
+            if (surfaceInfo.albedo > 0.0f)
+            {
+                mTraceCount++;
+                //一定有反射，先不考虑折射
+                Ray reflectRay = new Ray();
+                reflectRay.origin = hit.point + hit.normal * 0.0001f;
+                reflectRay.direction = Vector3.Reflect(ray.direction, hit.normal);
+                //反射方向随机采样
+                //reflectRay.direction += Random.onUnitSphere;
 
 
-            result += (Trace(reflectRay,screenPosition)*surfaceInfo.albedo);
+                result += (Trace(reflectRay, screenPosition) * surfaceInfo.albedo);
+            }
 
         }
         foreach (Light light in lightList)
@@ -144,6 +153,8 @@ abstract public class RayTraceRender
     abstract public bool TerminalTrace(Vector2 screenPosition, RaycastHit hit,Ray ray);
     abstract public void PreTrace();
     abstract public void PostTrace();
+    abstract public void OnFinish();
+    abstract public void OnStart();
 
 
 

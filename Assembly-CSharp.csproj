@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\Compute\ComputeShaderConfig.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\Compute\ComputeShaderUtil.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\Compute\DebugUtil.cs" />
+    <Compile Include="Assets\Scripts\RayTraceEngine\Core\KDTree.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\LightHandler.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\RayTraceRender.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\RayUtil.cs" />

@@ -28,8 +28,9 @@ public class DefaultLightHandler : LightHandler
                 if (Vector3.Dot(ligthDirection, hit.normal) > 0)
                 {
                     //在圆内随机采样
-                    
+
                     Vector3 shadowRayDirection = ligthDirection + Random.onUnitSphere * 0.009f;
+                    //Vector3 shadowRayDirection = ligthDirection;
                     if (Physics.Raycast(hit.point, shadowRayDirection, 500))
                     {
                         return new Vector3(0.0f, 0.0f, 0.0f);

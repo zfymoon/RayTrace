@@ -7,7 +7,7 @@ public class DebugUtil
     public static string LEVEL_INFO = "INFO";
     public static string LEVEL_DEBUG = "DEBUG";
     public static string LEVEL_ERROR = "ERROR";
-    public static int INFO_LENGTH = 200;
+    public static int INFO_LENGTH = 100;
     public struct DebugInfo
     {
         public float[] tag;
@@ -41,11 +41,19 @@ public class DebugUtil
         {
             return new float[] { 0 };
         }
-        int length = str.Length;
+        int length = INFO_LENGTH;
+       
         float[] result = new float[length];
         for(int i = 0; i < length; i++)
         {
-            result[i] = str[i];
+            if (i >= str.Length)
+            {
+                result[i] = 0;
+            }
+            else
+            {
+                result[i] = str[i];
+            }
         }
         return result;
     }

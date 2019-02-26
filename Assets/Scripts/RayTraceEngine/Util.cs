@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System;
 
 public class Util : MonoBehaviour
 {
@@ -55,6 +55,14 @@ public class Util : MonoBehaviour
         return Vector3.Dot(a, b) / 2.0f;
 
     }
+    public static long GetTimeStamp()
+    {
+        return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+    }
+    public static bool FloatEqual(float a,float b)
+    {
+        return Mathf.Abs(a - b) < 0.000001f;
+    }
 
-   
+
 }
