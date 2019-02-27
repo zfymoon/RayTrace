@@ -1,16 +1,16 @@
 ﻿<Properties StartupConfiguration="{77517ECE-7837-1870-5D6F-A62005446CB6}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RayTraceEngine/Core/KDTree.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RayTraceEngine/Core/NewClass.cs">
     <Files>
-      <File FileName="Assets/Scripts/RayTraceEngine/DefaultLightHandler.cs" Line="35" Column="62" />
-      <File FileName="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="179" Column="37" />
+      <File FileName="Assets/Scripts/RayTraceEngine/DefaultLightHandler.cs" Line="20" Column="16" />
+      <File FileName="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="73" Column="29" />
       <File FileName="Assets/Scripts/RayTraceEngine/RayTest.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/RayUtil.cs" Line="28" Column="72" />
-      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" Line="14" Column="40" />
-      <File FileName="Assets/Scripts/Main/RayTraceController.cs" Line="29" Column="1" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/RayTraceRender.cs" Line="100" Column="23" />
+      <File FileName="Assets/Scripts/Main/RayTraceController.cs" Line="44" Column="6" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/LightHandler.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/RayTraceEngine/Core/SurfaceInfo.cs" Line="15" Column="6" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/SurfaceInfo.cs" Line="13" Column="26" />
       <File FileName="../Downloads/CmRayTracePh (2)/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" Line="51" Column="20" />
-      <File FileName="Assets/Scripts/RayTraceEngine/Util.cs" Line="59" Column="4" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Util.cs" Line="64" Column="44" />
       <File FileName="Assets/Shaders/PostHandle.shader" Line="30" Column="45" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/Compute/RayCast.compute" Line="20" Column="22" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/Compute/ComputeShaderUtil.cs" Line="11" Column="1" />
@@ -18,6 +18,7 @@
       <File FileName="Assets/Scripts/RayTraceEngine/Core/Compute/DebugUtil.cs" Line="58" Column="23" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/Compute/ComputeController.cs" Line="46" Column="1" />
       <File FileName="Assets/Scripts/RayTraceEngine/Core/KDTree.cs" Line="10" Column="2" />
+      <File FileName="Assets/Scripts/RayTraceEngine/Core/NewClass.cs" Line="9" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
@@ -26,6 +27,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/curiezhu/Downloads/CmRayTracePh (2)/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" line="46" column="1" />
+      <Breakpoint file="/Users/curiezhu/RayTrace/Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" relfile="Assets/Scripts/RayTraceEngine/DefaultRayTraceRender.cs" line="92" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

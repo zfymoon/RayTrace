@@ -10,6 +10,7 @@ public class SurfaceInfo
     public float alpha;
 
     public Vector3 normal;
+    public Vector3 light;
 
     public void Init()
     {

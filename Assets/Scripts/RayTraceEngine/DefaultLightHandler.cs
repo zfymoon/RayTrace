@@ -37,10 +37,10 @@ public class DefaultLightHandler : LightHandler
                     }
                     //计算高光反射
                     //lightResult += RayUtil.PhoneLight(ligthDirection, Util.ColorToVector3(light.color), surfaceInfo.specular, light.intensity, normal, viewDirection, surfaceInfo.alpha);
-                    lightResult += RayUtil.BlinnPhong(ligthDirection, Util.ColorToVector3(light.color), surfaceInfo.specular, light.intensity, normal, viewDirection, surfaceInfo.alpha);
+                    //lightResult += RayUtil.BlinnPhong(ligthDirection, Util.ColorToVector3(light.color), surfaceInfo.specular, light.intensity, normal, viewDirection, surfaceInfo.alpha);
 
-                    //计算漫反射
-                    lightResult += RayUtil.LambertLight( light.transform.position - hit.point, Util.ColorToVector3(light.color), surfaceInfo.albedo, normal, light.intensity);
+                    ////计算漫反射
+                    //lightResult += RayUtil.LambertLight( light.transform.position - hit.point, Util.ColorToVector3(light.color), surfaceInfo.albedo, normal, light.intensity);
 
                 }
                 break;
@@ -48,6 +48,28 @@ public class DefaultLightHandler : LightHandler
                 ligthDirection = Vector3.Normalize(hit.point - light.transform.position);
                 break;
             case LightType.Spot:
+                float distance = Vector3.Distance(hit.point,light.transform.position);
+                ligthDirection = (light.transform.position - hit.point).normalized;
+                float dotDirectionNormal = Vector3.Dot(ligthDirection,hit.normal);
+                if(distance < light.range && dotDirectionNormal > 0.0f)
+                {
+
+                    float dotDirectionLight = Vector3.Dot(ligthDirection,-light.transform.forward);
+                    if(dotDirectionLight > (1 - light.spotAngle) / 180f)
+                    {
+                        if (Physics.Raycast(hit.point,ligthDirection,500))
+                        {
+                            return new Vector3(0.0f, 0.0f, 0.0f);
+                        }
+                        //计算高光反射
+                        //lightResult += RayUtil.PhoneLight(ligthDirection, Util.ColorToVector3(light.color), surfaceInfo.specular, light.intensity, normal, viewDirection, surfaceInfo.alpha);
+                        lightResult += RayUtil.BlinnPhong(ligthDirection, Util.ColorToVector3(light.color), surfaceInfo.specular, light.intensity, normal, viewDirection, surfaceInfo.alpha);
+
+                        //计算漫反射
+                        lightResult += RayUtil.LambertLight(light.transform.position - hit.point, Util.ColorToVector3(light.color), surfaceInfo.albedo, normal, light.intensity);
+                    }
+
+                }
                 //聚光灯
 
                 break;

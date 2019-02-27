@@ -77,12 +77,20 @@ public class DefaultRayTraceRender : RayTraceRender
                         }
 
                     }
-                    
-                   
+                    if (gameObject.name.Contains("neonsi"))
+                    {
+                        surfaceInfo.light = new Vector3(1.0f, 0.5f, 0.5f);
+                    }
+
+
                 }
                 else
                 {
 
+                    if (gameObject.name.Contains("neonsi"))
+                    {
+                        surfaceInfo.light = new Vector3(0.7f, 0.8f, 0.5f);
+                    }
                     Texture2D texture = null;
                     Material material = null;
                     SkinnedMeshRenderer skinnedMeshRenderer = null;
@@ -219,7 +227,7 @@ public class DefaultRayTraceRender : RayTraceRender
         int tIndex2 = hIndex * 3 + 2;
 
 
-        if (tIndex0 < trianglesLength && tIndex1 < trianglesLength && tIndex2 < trianglesLength)
+        if (tIndex0 >= 0 && tIndex0 < trianglesLength && tIndex1 < trianglesLength && tIndex2 < trianglesLength)
         {
             int vIndex0 = triangles[tIndex0];
             int vIndex1 = triangles[tIndex1];

@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\Compute\DebugUtil.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\KDTree.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\LightHandler.cs" />
+    <Compile Include="Assets\Scripts\RayTraceEngine\Core\LightObject.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\RayTraceRender.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\RayUtil.cs" />
     <Compile Include="Assets\Scripts\RayTraceEngine\Core\SurfaceInfo.cs" />

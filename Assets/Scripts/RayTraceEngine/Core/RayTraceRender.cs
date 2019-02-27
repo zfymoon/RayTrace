@@ -11,7 +11,7 @@ abstract public class RayTraceRender
     private int MAX_CAST_DISTANCE = 100;
     private Light[] mLightList;
     private List<LightHandler> mLightHandlerList;
-    public static int SAMPLE_COUNT = 50;
+    public static int SAMPLE_COUNT = 4;
     private Texture2D mMainTexture;
     public int mTraceCount = 0;
 
@@ -91,44 +91,68 @@ abstract public class RayTraceRender
     }
     private Vector3 Shade(RaycastHit hit,Ray ray,Vector2 screenPosition)
     {
+       
         Vector3 result = new Vector3(0.0f, 0.0f, 0.0f);
         List<Light> lightList = new List<Light>(mLightList);
         SurfaceInfo surfaceInfo = GetSurfaceInfo(screenPosition, hit);
         hit.normal = surfaceInfo.normal;
-
-        if (!TerminalTrace(screenPosition,hit,ray))
+        float distance = Vector3.Distance(hit.point, new Vector3(1.05f,0.8f,-0.2f));
+        if (Util.FloatEqual(distance,0.0f))
         {
-            //能反射的时候才反射
-            if (surfaceInfo.albedo > 0.0f)
-            {
-                mTraceCount++;
-                //一定有反射，先不考虑折射
-                Ray reflectRay = new Ray();
-                reflectRay.origin = hit.point + hit.normal * 0.0001f;
-                reflectRay.direction = Vector3.Reflect(ray.direction, hit.normal);
-                //反射方向随机采样
-                //reflectRay.direction += Random.onUnitSphere;
+            result += new Vector3(0.2f, 0.2f, 0.2f);
+        }
+        else {
 
+            result += new Vector3(0.2f, 0.2f, 0.2f) * 1 / (distance * distance);
+
+            }
+        if(surfaceInfo.light.x > 0.0f)
+        {
+
+            float degree = Vector3.Dot(Vector3.Normalize(hit.normal), Vector3.Normalize(ray.direction * -1.0f));
+            return surfaceInfo.emission * degree*(10.0f/hit.distance)*0.8f;  
+
+
+        }
+       
+            if (!TerminalTrace(screenPosition, hit, ray))
+            {
+                //能反射的时候才反射
+                if (surfaceInfo.albedo > 0.0f)
+                {
+                    mTraceCount++;
+                    //一定有反射，先不考虑折射
+                    Ray reflectRay = new Ray();
+                    reflectRay.origin = hit.point + hit.normal * 0.0001f;
+                    reflectRay.direction = Vector3.Reflect(ray.direction, hit.normal);
+                    //反射方向随机采样
+                    //reflectRay.direction += Random.onUnitSphere;
+
+
+           
 
                 result += (Trace(reflectRay, screenPosition) * surfaceInfo.albedo);
             }
 
-        }
-        foreach (Light light in lightList)
-        {
-            foreach(LightHandler handler in mLightHandlerList)
+            }
+            foreach (Light light in lightList)
             {
-                if(handler != null)
+                foreach (LightHandler handler in mLightHandlerList)
                 {
-                    result += handler.OnHandle(light,surfaceInfo,hit,ray);
+                    if (handler != null)
+                    {
+                        result += handler.OnHandle(light, surfaceInfo, hit, ray);
+                    }
                 }
+
             }
 
-        }
-
-
         
-        result += new Vector3(0.38f, 0.38f, 0.38f);
+
+
+
+
+        result += new Vector3(0.48f, 0.48f, 0.48f);
 
         if (surfaceInfo != null)
         {

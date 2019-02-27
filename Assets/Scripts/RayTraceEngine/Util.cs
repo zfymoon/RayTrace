@@ -61,7 +61,7 @@ public class Util : MonoBehaviour
     }
     public static bool FloatEqual(float a,float b)
     {
-        return Mathf.Abs(a - b) < 0.000001f;
+        return Mathf.Abs(a - b) < 0.00000001f;
     }
 
 
