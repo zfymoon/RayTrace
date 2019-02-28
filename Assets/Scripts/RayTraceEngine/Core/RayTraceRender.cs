@@ -14,6 +14,8 @@ abstract public class RayTraceRender
     public static int SAMPLE_COUNT = 4;
     private Texture2D mMainTexture;
     public int mTraceCount = 0;
+    public Dictionary<string, LightObject> mLightObjectList = new Dictionary<string, LightObject>();
+    public Vector3 ambientColor;
 
     public Color getColorFromScreen(Vector2 position)
     {
@@ -37,6 +39,7 @@ abstract public class RayTraceRender
         mLightList = lightList;
         LoadLightHandler();
         mMainTexture = mainTexture;
+        ambientColor = new Vector3(0.48f, 0.48f, 0.48f);
     }
 
     public void Render()
@@ -56,6 +59,30 @@ abstract public class RayTraceRender
                     Ray ray = Camera.main.ScreenPointToRay(position);
                     PreTrace();
                     color += Trace(ray, position);
+                   
+                  
+                    foreach (Light light in mLightList)
+                    {
+
+                        if (light != null && light.type == LightType.Spot)
+                        {
+
+                            LightObject lightObj;
+                            if(!mLightObjectList.TryGetValue(light.name,out lightObj))
+                            {
+                                LightObject tmpLightObj = new LightObject();
+                                lightObj = tmpLightObj;
+                                mLightObjectList.Add(light.name, tmpLightObj);
+                                lightObj.Init(Util.ColorToVector3(light.color),light.transform.position,0.1f);
+                            }
+                         
+                            if(lightObj != null)
+                            {
+                                color += lightObj.RayMarch(ray,0f,100f);
+
+                            }
+                        }
+                    }
                     PostTrace();
                 }
                 color /= (SAMPLE_COUNT + 0.0f);
@@ -85,7 +112,7 @@ abstract public class RayTraceRender
         }
         else
         {
-            return new Vector3(0.0f,0.0f,0.0f);
+            return new Vector3(0.0f, 0.0f, 0.0f);
         }
 
     }
@@ -127,11 +154,7 @@ abstract public class RayTraceRender
                     reflectRay.direction = Vector3.Reflect(ray.direction, hit.normal);
                     //反射方向随机采样
                     //reflectRay.direction += Random.onUnitSphere;
-
-
-           
-
-                result += (Trace(reflectRay, screenPosition) * surfaceInfo.albedo);
+                    result += (Trace(reflectRay, screenPosition) * surfaceInfo.albedo);
             }
 
             }
@@ -146,18 +169,15 @@ abstract public class RayTraceRender
                 }
 
             }
-
         
-
-
-
-
-        result += new Vector3(0.48f, 0.48f, 0.48f);
+        result += ambientColor;
 
         if (surfaceInfo != null)
         {
             result = Util.Vector3MulVector3(result, surfaceInfo.emission);
         }
+
+      
 
         return result;
 
