@@ -17,20 +17,6 @@ abstract public class RayTraceRender
     public Dictionary<string, LightObject> mLightObjectList = new Dictionary<string, LightObject>();
     public Vector3 ambientColor;
 
-    public Color getColorFromScreen(Vector2 position)
-    {
-
-        if (mMainTexture)
-        {
-            return mMainTexture.GetPixelBilinear(position.x,position.y);
-        }
-        else
-        {
-            return new Color();
-        }
-
-    }
-
     public void Init(ref Texture2D screenTexture,int width,int height,ref Light[] lightList,Texture2D mainTexture)
     {
         mScreenTexture = screenTexture;
@@ -73,7 +59,7 @@ abstract public class RayTraceRender
                                 LightObject tmpLightObj = new LightObject();
                                 lightObj = tmpLightObj;
                                 mLightObjectList.Add(light.name, tmpLightObj);
-                                lightObj.Init(Util.ColorToVector3(light.color),light.transform.position,0.1f);
+                                lightObj.Init(Util.ColorToVector3(light.color),light.transform.position,1.0f);
                             }
                          
                             if(lightObj != null)
@@ -123,16 +109,6 @@ abstract public class RayTraceRender
         List<Light> lightList = new List<Light>(mLightList);
         SurfaceInfo surfaceInfo = GetSurfaceInfo(screenPosition, hit);
         hit.normal = surfaceInfo.normal;
-        float distance = Vector3.Distance(hit.point, new Vector3(1.05f,0.8f,-0.2f));
-        if (Util.FloatEqual(distance,0.0f))
-        {
-            result += new Vector3(0.2f, 0.2f, 0.2f);
-        }
-        else {
-
-            result += new Vector3(0.2f, 0.2f, 0.2f) * 1 / (distance * distance);
-
-            }
         if(surfaceInfo.light.x > 0.0f)
         {
 

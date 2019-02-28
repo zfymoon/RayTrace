@@ -41,7 +41,11 @@ public class LightObject
         int realCount = 0;
         for(int i = 0; i < MAX_SAMPLE_COUNT && t >= minDistance && t <= maxDistance; i++)
         {
-            result += GetSampleColor(Vector3.Distance(ray.GetPoint(t),GetPosition()));
+            Vector3 p = ray.GetPoint(t);
+            if (!InShadow(p))
+            {
+                result += GetSampleColor(Vector3.Distance(p, GetPosition()));
+            }
             t += GetStep();
             realCount++;
         }
@@ -69,8 +73,18 @@ public class LightObject
 
     public bool InShadow(Vector3 point)
     {
-
-        return false;
+        Ray ray = new Ray();
+        ray.origin = point;
+        ray.direction = mPosition - point;
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit,1000f))
+        {
+            return (hit.distance + mInnerDistance) < Vector3.Distance(point,mPosition);
+        }
+        else
+        {
+            return false;
+        }
 
     }
 
