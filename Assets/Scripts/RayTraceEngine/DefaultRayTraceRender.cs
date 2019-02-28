@@ -75,18 +75,14 @@ public class DefaultRayTraceRender : RayTraceRender
                             GetFixedNormal(mesh, ref surfaceInfo.normal, hit.triangleIndex, hit.collider.transform, hit.barycentricCoordinate);
                             PutNormal(hit.point, surfaceInfo.normal);
                         }
-
                     }
                     if (gameObject.name.Contains("neonsi"))
                     {
                         surfaceInfo.light = new Vector3(1.0f, 0.5f, 0.5f);
                     }
-
-
                 }
                 else
                 {
-
                     if (gameObject.name.Contains("neonsi"))
                     {
                         surfaceInfo.light = new Vector3(0.7f, 0.8f, 0.5f);
@@ -102,7 +98,6 @@ public class DefaultRayTraceRender : RayTraceRender
                         surfaceInfo.emission = Util.ColorToVector3(texture.GetPixelBilinear(hit.textureCoord.x, hit.textureCoord.y));
                         surfaceInfo.alpha = RayUtil.SmoothnessToAlpha(material.GetFloat("_Glossiness"));
                         surfaceInfo.albedo = material.GetFloat("_Metallic");
-
                     }
                     if (skinnedMeshRenderer)
                     {
@@ -114,18 +109,11 @@ public class DefaultRayTraceRender : RayTraceRender
                         }
                         else
                         {
-
                             GetFixedNormal(mesh, ref surfaceInfo.normal, hit.triangleIndex, hit.collider.transform, hit.barycentricCoordinate);
                             PutNormal(hit.point, surfaceInfo.normal);
                         }
-                      
                     }
-                  
-
-
                 }
-
-
             }
         }
 
