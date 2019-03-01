@@ -13,7 +13,7 @@ public class LightObject
 
     public Vector3 mLightColor;
 
-    public static int MAX_SAMPLE_COUNT = 10;
+    public static int MAX_SAMPLE_COUNT = 30;
 
     public float mStep = 0.0f;
 
@@ -26,7 +26,7 @@ public class LightObject
 
         mPosition = position;
         mLightColor = color;
-        mStep = 0.5f;
+        mStep = 0.4f;
         mInnerDistance = length;
 
     }
@@ -76,10 +76,14 @@ public class LightObject
         Ray ray = new Ray();
         ray.origin = point;
         ray.direction = mPosition - point;
-        RaycastHit hit;
-        if(Physics.Raycast(ray, out hit,1000f))
+        //return Vector3.Distance(point, mPosition) > 1.0f;
+
+        Vector3 direction = (mPosition - point).normalized;
+
+
+        if (Physics.Raycast(point,direction, 500f))
         {
-            return (hit.distance + mInnerDistance) < Vector3.Distance(point,mPosition);
+            return true;
         }
         else
         {

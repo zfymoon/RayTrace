@@ -50,7 +50,7 @@ abstract public class RayTraceRender
                     foreach (Light light in mLightList)
                     {
 
-                        if (light != null && light.type == LightType.Spot)
+                        if (light != null && (light.type == LightType.Spot || light.type == LightType.Point))
                         {
 
                             LightObject lightObj;
