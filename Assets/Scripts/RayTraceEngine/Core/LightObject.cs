@@ -9,11 +9,11 @@ public class LightObject
     public BoundingSphere boundSphere;
     public static float MAX_LIGHT_DISTANCE = 2.0f;
     //物体最靠近的颜色
-    public static float MIN_DISTANCE = 1.0E-3f;
+    public static float MIN_DISTANCE = 1.0E-2f;
 
     public Vector3 mLightColor;
 
-    public static int MAX_SAMPLE_COUNT = 30;
+    public static int MAX_SAMPLE_COUNT =180;
 
     public float mStep = 0.0f;
 
@@ -26,7 +26,7 @@ public class LightObject
 
         mPosition = position;
         mLightColor = color;
-        mStep = 0.4f;
+        mStep = 0.1f;
         mInnerDistance = length;
 
     }
@@ -45,16 +45,18 @@ public class LightObject
             if (!InShadow(p))
             {
                 result += GetSampleColor(Vector3.Distance(p, GetPosition()));
+                realCount++;
             }
             t += GetStep();
-            realCount++;
+           // t += UnityEngine.Random.value;
+
         }
         result /= (realCount + 0.0f);
         return result;
     }
     public Vector3 GetSampleColor(float distance)
     {
-        return mLightColor * (mInnerDistance / (distance*distance  + 0.0f));
+        return mLightColor * (mInnerDistance / (distance  + 0.0f));
     }
     public Vector3 GetPosition()
     {
@@ -73,17 +75,18 @@ public class LightObject
 
     public bool InShadow(Vector3 point)
     {
-        Ray ray = new Ray();
-        ray.origin = point;
-        ray.direction = mPosition - point;
+     
         //return Vector3.Distance(point, mPosition) > 1.0f;
 
         Vector3 direction = (mPosition - point).normalized;
+        RaycastHit hit;
 
-
-        if (Physics.Raycast(point,direction, 500f))
+       
+        if (Physics.Raycast(point ,direction ,out hit,100f))
         {
-            return true;
+
+            return hit.distance >= 0.0f;
+
         }
         else
         {
